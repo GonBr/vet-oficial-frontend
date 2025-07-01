@@ -34,9 +34,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copiar arquivos buildados do stage anterior
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Criar usuário não-root
-RUN addgroup -g 1001 -S nginx && \
-    adduser -S nginx -u 1001 -G nginx
+# Criar usuário não-root (se não existir)
+RUN if ! getent group nginx > /dev/null 2>&1; then addgroup -g 1001 -S nginx; fi && \
+    if ! getent passwd nginx > /dev/null 2>&1; then adduser -S nginx -u 1001 -G nginx; fi
 
 # Ajustar permissões
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
