@@ -28,7 +28,8 @@ RUN apk add --no-cache dumb-init
 # Remover configuração padrão do nginx
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Copiar configuração customizada do nginx
+# Copiar configurações customizadas do nginx
+COPY nginx-main.conf /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copiar arquivos buildados do stage anterior
@@ -38,27 +39,23 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 RUN if ! getent group nginx > /dev/null 2>&1; then addgroup -g 1001 -S nginx; fi && \
     if ! getent passwd nginx > /dev/null 2>&1; then adduser -S nginx -u 1001 -G nginx; fi
 
-# Ajustar permissões
+# Ajustar permissões para usuário não-root
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chown -R nginx:nginx /var/cache/nginx && \
-    chown -R nginx:nginx /var/log/nginx && \
-    chown -R nginx:nginx /etc/nginx/conf.d
-
-# Criar diretório para PID do nginx com permissões corretas
-RUN mkdir -p /var/run && \
-    touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run && \
-    chmod 755 /var/run
+    chown -R nginx:nginx /etc/nginx/conf.d && \
+    mkdir -p /tmp && \
+    chown -R nginx:nginx /tmp && \
+    chmod 755 /tmp
 
 # Mudar para usuário não-root
 USER nginx
 
-# Expor porta
-EXPOSE 80
+# Expor porta não-privilegiada
+EXPOSE 8080
 
-# Health check
+# Health check na porta correta
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1
 
 # Comando de inicialização
 ENTRYPOINT ["dumb-init", "--"]
