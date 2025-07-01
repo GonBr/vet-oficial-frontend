@@ -1,0 +1,56 @@
+# Dependências
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de desenvolvimento
+.env.local
+.env.development
+.env.test
+*.log
+
+# Build local
+dist/
+
+# Arquivos de teste
+coverage/
+*.test.js
+*.test.ts
+*.test.tsx
+*.spec.js
+*.spec.ts
+*.spec.tsx
+__tests__/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentação
+README.md
+docs/
+
+# Configurações de desenvolvimento
+vite.config.ts.bak
+tsconfig.json.bak
+
+# Cache do Vite
+.vite/
+
+# ESLint cache
+.eslintcache

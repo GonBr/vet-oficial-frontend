@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-warm-50 via-cream-50 to-sage-50 text-earth-900 min-h-screen;
+    background-attachment: fixed;
+  }
+
+  /* Subtle texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(156, 175, 136, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@layer components {
+  /* Enhanced Button System */
+  .btn {
+    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 transform hover:scale-105 active:scale-95 shadow-soft;
+    background: linear-gradient(135deg, var(--btn-from), var(--btn-to));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn-primary {
+    --btn-from: #D2691E;
+    --btn-to: #CD853F;
+    @apply btn text-white hover:shadow-warm focus:ring-warm-300;
+  }
+
+  .btn-secondary {
+    --btn-from: #F5E6D3;
+    --btn-to: #E6D7C3;
+    @apply btn text-earth-800 hover:shadow-soft focus:ring-sage-300;
+  }
+
+  .btn-success {
+    --btn-from: #9CAF88;
+    --btn-to: #8FBC8F;
+    @apply btn text-white hover:shadow-sage focus:ring-sage-400;
+  }
+
+  .btn-danger {
+    --btn-from: #CD5C5C;
+    --btn-to: #DC143C;
+    @apply btn text-white hover:shadow-red focus:ring-red-300;
+  }
+
+  .btn-disabled {
+    --btn-from: #D3D3D3;
+    --btn-to: #C0C0C0;
+    @apply btn text-gray-500 cursor-not-allowed transform-none hover:scale-100;
+  }
+
+  .btn-disabled::before {
+    display: none;
+  }
+
+  /* Enhanced Input System */
+  .input {
+    @apply w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-warm-200 focus:border-warm-300 transition-all duration-300 bg-cream-50/50 backdrop-blur-sm;
+  }
+
+  .input:focus {
+    @apply shadow-warm transform scale-105;
+  }
+
+  /* Enhanced Card System */
+  .card {
+    @apply bg-gradient-to-br from-cream-50/80 to-warm-50/60 rounded-xl shadow-soft border border-sage-200/50 p-6 backdrop-blur-sm transition-all duration-500 hover:shadow-warm hover:scale-102;
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* Professional Recording Animation */
+  .recording-pulse {
+    animation: professional-pulse 2s infinite;
+  }
+
+  /* Veterinary Professional Elements */
+  .vet-card {
+    @apply card border-l-2 border-l-warm-400;
+    background: linear-gradient(135deg, #FFF8F0 0%, #F5E6D3 100%);
+  }
+
+  .vet-header {
+    @apply bg-gradient-to-r from-warm-600 via-warm-500 to-sage-600 text-white;
+    background-size: 200% 100%;
+    animation: gentle-gradient 8s ease-in-out infinite;
+  }
+
+  .medical-accent {
+    @apply border-l-4 border-l-warm-400 bg-gradient-to-r from-warm-50 to-cream-50;
+  }
+}
+
+/* Professional Animations */
+@keyframes professional-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(205, 92, 92, 0.7);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(205, 92, 92, 0);
+  }
+}
+
+@keyframes gentle-gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Utility Animation Classes */
+.animate-float-in {
+  animation: float-in 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s ease-out;
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.4s ease-out;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 69, 19, 0.15);
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 69, 19, 0.3) rgba(245, 230, 211, 0.5);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(245, 230, 211, 0.5);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 69, 19, 0.3);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 69, 19, 0.5);
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Enhanced Recording Pulse Animation */
+@keyframes recording-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(229, 62, 62, 0);
+  }
+}
+
+.recording-pulse {
+  animation: recording-pulse 1.5s ease-in-out infinite;
+}
+
+/* Custom border utilities */
+.border-b-3 {
+  border-bottom-width: 3px;
+}
