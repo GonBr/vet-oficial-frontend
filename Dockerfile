@@ -44,9 +44,11 @@ RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chown -R nginx:nginx /var/log/nginx && \
     chown -R nginx:nginx /etc/nginx/conf.d
 
-# Criar diretório para PID do nginx
-RUN touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid
+# Criar diretório para PID do nginx com permissões corretas
+RUN mkdir -p /var/run && \
+    touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run && \
+    chmod 755 /var/run
 
 # Mudar para usuário não-root
 USER nginx
